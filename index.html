@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>💡 Insight Tracker</h1>
+            <nav>
+                <button class="nav-btn active" data-view="repository">Repository</button>
+                <button class="nav-btn" data-view="add-insight">Add Insight</button>
+                <button class="nav-btn" data-view="meeting">Meeting Mode</button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Repository View -->
+            <section id="repository-view" class="view active">
+                <div class="view-header">
+                    <h2>Insights Repository</h2>
+                    <div class="search-filter">
+                        <input type="text" id="search-input" placeholder="Search insights...">
+                        <select id="tag-filter">
+                            <option value="">All Tags</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="insights-grid" class="insights-grid">
+                    <!-- Insight cards will be dynamically added here -->
+                </div>
+                <div id="empty-state" class="empty-state">
+                    <p>No insights yet. Start by adding your first insight!</p>
+                </div>
+            </section>
+
+            <!-- Add Insight View -->
+            <section id="add-insight-view" class="view">
+                <div class="view-header">
+                    <h2>Add New Insight</h2>
+                </div>
+                <form id="insight-form" class="insight-form">
+                    <div class="form-group">
+                        <label for="insight-url">Website URL *</label>
+                        <input type="url" id="insight-url" required placeholder="https://example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="insight-title">Title *</label>
+                        <input type="text" id="insight-title" required placeholder="Brief title for this insight">
+                    </div>
+                    <div class="form-group">
+                        <label for="insight-description">Description</label>
+                        <textarea id="insight-description" rows="4" placeholder="What's interesting about this?"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="insight-tags">Tags (comma-separated)</label>
+                        <input type="text" id="insight-tags" placeholder="design, innovation, research">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save Insight</button>
+                        <button type="reset" class="btn btn-secondary">Clear</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Meeting Mode View -->
+            <section id="meeting-view" class="view">
+                <div class="view-header">
+                    <h2>Meeting Mode</h2>
+                    <button id="toggle-ideas-panel" class="btn btn-secondary">Show Ideas Panel</button>
+                </div>
+
+                <div class="meeting-container">
+                    <!-- Insights Selection Panel -->
+                    <div class="insights-selection">
+                        <h3>Select Insights to Share</h3>
+                        <div id="meeting-insights-list" class="meeting-insights-list">
+                            <!-- Checkboxes for insights will be added here -->
+                        </div>
+                        <button id="start-presentation" class="btn btn-primary">Start Presentation</button>
+                    </div>
+
+                    <!-- Presentation Area -->
+                    <div id="presentation-area" class="presentation-area">
+                        <div id="current-insight-display" class="current-insight-display">
+                            <p class="placeholder">Select insights and click "Start Presentation"</p>
+                        </div>
+                        <div class="presentation-controls">
+                            <button id="prev-insight" class="btn" disabled>← Previous</button>
+                            <span id="insight-counter"></span>
+                            <button id="next-insight" class="btn" disabled>Next →</button>
+                        </div>
+                    </div>
+
+                    <!-- Ideas Panel -->
+                    <div id="ideas-panel" class="ideas-panel">
+                        <h3>Brainstorming Ideas</h3>
+                        <div class="idea-input-group">
+                            <textarea id="idea-input" placeholder="Capture ideas during the meeting..." rows="3"></textarea>
+                            <button id="add-idea" class="btn btn-primary">Add Idea</button>
+                        </div>
+                        <div id="ideas-list" class="ideas-list">
+                            <!-- Ideas will be added here -->
+                        </div>
+                        <button id="export-ideas" class="btn btn-secondary">Export Ideas</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
