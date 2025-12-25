@@ -3,116 +3,504 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insight Tracker</title>
+    <title>AI Agent Library</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <h1>💡 Insight Tracker</h1>
-            <nav>
-                <button class="nav-btn active" data-view="repository">Repository</button>
-                <button class="nav-btn" data-view="add-insight">Add Insight</button>
-                <button class="nav-btn" data-view="meeting">Meeting Mode</button>
-            </nav>
-        </header>
+    <div class="app-container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <span class="nav-logo-icon">🤖</span>
+                    <span>AI Agent Library</span>
+                </div>
+
+                <div class="nav-menu">
+                    <button class="nav-btn active" data-view="agents">
+                        <span>👥</span>
+                        <span>AI Agents</span>
+                    </button>
+                    <button class="nav-btn" data-view="tools">
+                        <span>🛠️</span>
+                        <span>AI Toolbox</span>
+                    </button>
+                    <button class="nav-btn" data-view="workflows">
+                        <span>🎯</span>
+                        <span>MyAI Workflows</span>
+                    </button>
+                </div>
+
+                <div class="nav-actions">
+                    <button class="btn btn-secondary btn-small" id="export-data-btn">
+                        <span>📥</span>
+                        Export Data
+                    </button>
+                </div>
+            </div>
+        </nav>
 
         <!-- Main Content -->
-        <main>
-            <!-- Repository View -->
-            <section id="repository-view" class="view active">
-                <div class="view-header">
-                    <h2>Insights Repository</h2>
-                    <div class="search-filter">
-                        <input type="text" id="search-input" placeholder="Search insights...">
-                        <select id="tag-filter">
-                            <option value="">All Tags</option>
+        <main class="main-content">
+            <!-- AI Agent Gallery View -->
+            <div id="agents-view" class="view active">
+                <div class="section-header">
+                    <h2 class="section-title">AI Agent Gallery</h2>
+                    <div class="section-actions">
+                        <div class="view-toggle">
+                            <button class="view-toggle-btn active" data-agent-view="grid">Grid</button>
+                            <button class="view-toggle-btn" data-agent-view="org-chart">Org Chart</button>
+                            <button class="view-toggle-btn" data-agent-view="teams">Teams</button>
+                        </div>
+                        <button class="btn btn-primary" id="add-agent-btn">+ Add Agent</button>
+                        <button class="btn btn-secondary btn-small" id="import-agents-btn">Import CSV</button>
+                    </div>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="search-filter-bar">
+                    <div class="search-input-wrapper">
+                        <input type="text" class="search-input" id="agent-search" placeholder="Search agents...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <div class="filter-group">
+                        <select class="form-select" id="agent-status-filter">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="on-hold">On Hold</option>
+                            <option value="archived">Archived</option>
+                        </select>
+                        <select class="form-select" id="agent-team-filter">
+                            <option value="">All Teams</option>
                         </select>
                     </div>
                 </div>
-                <div id="insights-grid" class="insights-grid">
-                    <!-- Insight cards will be dynamically added here -->
-                </div>
-                <div id="empty-state" class="empty-state">
-                    <p>No insights yet. Start by adding your first insight!</p>
-                </div>
-            </section>
 
-            <!-- Add Insight View -->
-            <section id="add-insight-view" class="view">
-                <div class="view-header">
-                    <h2>Add New Insight</h2>
-                </div>
-                <form id="insight-form" class="insight-form">
-                    <div class="form-group">
-                        <label for="insight-url">Website URL *</label>
-                        <input type="url" id="insight-url" required placeholder="https://example.com">
+                <!-- Agent Views -->
+                <div id="agent-grid-view" class="agent-view-container">
+                    <div id="agents-grid" class="card-grid">
+                        <!-- Agent cards will be inserted here -->
                     </div>
-                    <div class="form-group">
-                        <label for="insight-title">Title *</label>
-                        <input type="text" id="insight-title" required placeholder="Brief title for this insight">
+                    <div id="agents-empty" class="empty-state hidden">
+                        <div class="empty-state-icon">👥</div>
+                        <div class="empty-state-text">No agents yet</div>
+                        <button class="btn btn-primary" onclick="document.getElementById('add-agent-btn').click()">
+                            Add Your First Agent
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label for="insight-description">Description</label>
-                        <textarea id="insight-description" rows="4" placeholder="What's interesting about this?"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="insight-tags">Tags (comma-separated)</label>
-                        <input type="text" id="insight-tags" placeholder="design, innovation, research">
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Save Insight</button>
-                        <button type="reset" class="btn btn-secondary">Clear</button>
-                    </div>
-                </form>
-            </section>
-
-            <!-- Meeting Mode View -->
-            <section id="meeting-view" class="view">
-                <div class="view-header">
-                    <h2>Meeting Mode</h2>
-                    <button id="toggle-ideas-panel" class="btn btn-secondary">Show Ideas Panel</button>
                 </div>
 
-                <div class="meeting-container">
-                    <!-- Insights Selection Panel -->
-                    <div class="insights-selection">
-                        <h3>Select Insights to Share</h3>
-                        <div id="meeting-insights-list" class="meeting-insights-list">
-                            <!-- Checkboxes for insights will be added here -->
-                        </div>
-                        <button id="start-presentation" class="btn btn-primary">Start Presentation</button>
-                    </div>
-
-                    <!-- Presentation Area -->
-                    <div id="presentation-area" class="presentation-area">
-                        <div id="current-insight-display" class="current-insight-display">
-                            <p class="placeholder">Select insights and click "Start Presentation"</p>
-                        </div>
-                        <div class="presentation-controls">
-                            <button id="prev-insight" class="btn" disabled>← Previous</button>
-                            <span id="insight-counter"></span>
-                            <button id="next-insight" class="btn" disabled>Next →</button>
-                        </div>
-                    </div>
-
-                    <!-- Ideas Panel -->
-                    <div id="ideas-panel" class="ideas-panel">
-                        <h3>Brainstorming Ideas</h3>
-                        <div class="idea-input-group">
-                            <textarea id="idea-input" placeholder="Capture ideas during the meeting..." rows="3"></textarea>
-                            <button id="add-idea" class="btn btn-primary">Add Idea</button>
-                        </div>
-                        <div id="ideas-list" class="ideas-list">
-                            <!-- Ideas will be added here -->
-                        </div>
-                        <button id="export-ideas" class="btn btn-secondary">Export Ideas</button>
+                <div id="agent-org-chart-view" class="agent-view-container hidden">
+                    <div id="org-chart" class="org-chart">
+                        <!-- Org chart will be rendered here -->
                     </div>
                 </div>
-            </section>
+
+                <div id="agent-teams-view" class="agent-view-container hidden">
+                    <div class="section-header">
+                        <h3>Team Management</h3>
+                        <button class="btn btn-primary btn-small" id="add-team-btn">+ Add Team</button>
+                    </div>
+                    <div id="teams-grid" class="card-grid">
+                        <!-- Team cards will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Toolbox View -->
+            <div id="tools-view" class="view">
+                <div class="section-header">
+                    <h2 class="section-title">AI Toolbox</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" id="add-tool-btn">+ Add Tool</button>
+                        <button class="btn btn-secondary btn-small" id="import-tools-btn">Import CSV</button>
+                    </div>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="search-filter-bar">
+                    <div class="search-input-wrapper">
+                        <input type="text" class="search-input" id="tool-search" placeholder="Search tools...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <div class="filter-group">
+                        <select class="form-select" id="tool-category-filter">
+                            <option value="">All Categories</option>
+                            <option value="llm">LLM</option>
+                            <option value="image">Image Generation</option>
+                            <option value="automation">Automation</option>
+                            <option value="data">Data Analysis</option>
+                            <option value="code">Code Assistant</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <select class="form-select" id="tool-pricing-filter">
+                            <option value="">All Pricing</option>
+                            <option value="free">Free</option>
+                            <option value="freemium">Freemium</option>
+                            <option value="paid">Paid</option>
+                        </select>
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" id="tool-favorites-only">
+                            <span>Favorites Only</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tools Grid -->
+                <div id="tools-grid" class="card-grid">
+                    <!-- Tool cards will be inserted here -->
+                </div>
+                <div id="tools-empty" class="empty-state hidden">
+                    <div class="empty-state-icon">🛠️</div>
+                    <div class="empty-state-text">No tools yet</div>
+                    <button class="btn btn-primary" onclick="document.getElementById('add-tool-btn').click()">
+                        Add Your First Tool
+                    </button>
+                </div>
+            </div>
+
+            <!-- MyAI Workflows View -->
+            <div id="workflows-view" class="view">
+                <div class="section-header">
+                    <h2 class="section-title">MyAI Workflows</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" id="create-workflow-btn">+ Create Workflow</button>
+                        <button class="btn btn-secondary btn-small" id="import-workflows-btn">Import CSV</button>
+                    </div>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="search-filter-bar">
+                    <div class="search-input-wrapper">
+                        <input type="text" class="search-input" id="workflow-search" placeholder="Search workflows...">
+                        <span class="search-icon">🔍</span>
+                    </div>
+                    <div class="filter-group">
+                        <select class="form-select" id="workflow-status-filter">
+                            <option value="">All Status</option>
+                            <option value="draft">Draft</option>
+                            <option value="active">Active</option>
+                            <option value="completed">Completed</option>
+                            <option value="archived">Archived</option>
+                        </select>
+                        <select class="form-select" id="workflow-priority-filter">
+                            <option value="">All Priority</option>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Workflows Grid -->
+                <div id="workflows-grid" class="card-grid">
+                    <!-- Workflow cards will be inserted here -->
+                </div>
+                <div id="workflows-empty" class="empty-state hidden">
+                    <div class="empty-state-icon">🎯</div>
+                    <div class="empty-state-text">No workflows yet</div>
+                    <button class="btn btn-primary" onclick="document.getElementById('create-workflow-btn').click()">
+                        Create Your First Workflow
+                    </button>
+                </div>
+            </div>
         </main>
     </div>
+
+    <!-- Add/Edit Agent Modal -->
+    <div id="agent-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="agent-modal-title">Add New Agent</h3>
+                <button class="modal-close" onclick="app.closeAgentModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="agent-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Name *</label>
+                            <input type="text" class="form-input" id="agent-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Role/Title *</label>
+                            <input type="text" class="form-input" id="agent-role" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Primary Task</label>
+                        <input type="text" class="form-input" id="agent-task" placeholder="What is this agent's main responsibility?">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">How It Can Help</label>
+                        <textarea class="form-textarea" id="agent-help" placeholder="Describe how this agent can assist..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Capabilities (comma-separated)</label>
+                            <input type="text" class="form-input" id="agent-capabilities" placeholder="Python, Data Analysis, SQL">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Team</label>
+                            <select class="form-select" id="agent-team">
+                                <option value="">No Team</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" id="agent-status">
+                                <option value="active">Active</option>
+                                <option value="on-hold">On Hold</option>
+                                <option value="archived">Archived</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Avatar Color</label>
+                            <select class="form-select" id="agent-avatar-color">
+                                <option value="#FF6B35">Orange</option>
+                                <option value="#4ECDC4">Teal</option>
+                                <option value="#FF8B94">Coral</option>
+                                <option value="#95B46A">Sage</option>
+                                <option value="#FFE66D">Yellow</option>
+                                <option value="#1A535C">Navy</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="app.closeAgentModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="app.saveAgent()">Save Agent</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Tool Modal -->
+    <div id="tool-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="tool-modal-title">Add New Tool</h3>
+                <button class="modal-close" onclick="app.closeToolModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="tool-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Tool Name *</label>
+                            <input type="text" class="form-input" id="tool-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Website URL *</label>
+                            <input type="url" class="form-input" id="tool-website" required placeholder="https://...">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Category *</label>
+                            <select class="form-select" id="tool-category" required>
+                                <option value="llm">LLM</option>
+                                <option value="image">Image Generation</option>
+                                <option value="automation">Automation</option>
+                                <option value="data">Data Analysis</option>
+                                <option value="code">Code Assistant</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Pricing</label>
+                            <select class="form-select" id="tool-pricing">
+                                <option value="free">Free</option>
+                                <option value="freemium">Freemium</option>
+                                <option value="paid">Paid</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" id="tool-description" placeholder="What does this tool do?"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">How to Use</label>
+                        <textarea class="form-textarea" id="tool-how-to-use" placeholder="Brief instructions on how to use this tool..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Top Use Cases (comma-separated)</label>
+                        <input type="text" class="form-input" id="tool-use-cases" placeholder="Writing, Coding, Research">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Features (comma-separated)</label>
+                        <input type="text" class="form-input" id="tool-features" placeholder="Multi-modal, Fast, Accurate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tips & Remarks</label>
+                        <textarea class="form-textarea" id="tool-tips" placeholder="Any tips or important notes about this tool..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Rating (1-5)</label>
+                            <select class="form-select" id="tool-rating">
+                                <option value="5">5 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="3">3 Stars</option>
+                                <option value="2">2 Stars</option>
+                                <option value="1">1 Star</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Icon (emoji)</label>
+                            <input type="text" class="form-input" id="tool-icon" placeholder="🤖" maxlength="2">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="app.closeToolModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="app.saveTool()">Save Tool</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Team Modal -->
+    <div id="team-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Team</h3>
+                <button class="modal-close" onclick="app.closeTeamModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="team-form">
+                    <div class="form-group">
+                        <label class="form-label">Team Name *</label>
+                        <input type="text" class="form-input" id="team-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Team Color</label>
+                        <select class="form-select" id="team-color">
+                            <option value="#FF6B35">Orange</option>
+                            <option value="#4ECDC4">Teal</option>
+                            <option value="#FF8B94">Coral</option>
+                            <option value="#95B46A">Sage</option>
+                            <option value="#FFE66D">Yellow</option>
+                            <option value="#1A535C">Navy</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="app.closeTeamModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="app.saveTeam()">Save Team</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create/Edit Workflow Modal -->
+    <div id="workflow-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="workflow-modal-title">Create New Workflow</h3>
+                <button class="modal-close" onclick="app.closeWorkflowModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="workflow-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Workflow Name *</label>
+                            <input type="text" class="form-input" id="workflow-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Icon (emoji)</label>
+                            <input type="text" class="form-input" id="workflow-icon" placeholder="📝" maxlength="2">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" id="workflow-description" placeholder="What is this workflow for?"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" id="workflow-status">
+                                <option value="draft">Draft</option>
+                                <option value="active">Active</option>
+                                <option value="completed">Completed</option>
+                                <option value="archived">Archived</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Priority</label>
+                            <select class="form-select" id="workflow-priority">
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <input type="text" class="form-input" id="workflow-category" placeholder="e.g., Marketing, Development">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="app.closeWorkflowModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="app.saveWorkflow()">Save & Build Workflow</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workflow Builder Modal -->
+    <div id="workflow-builder-modal" class="modal-overlay">
+        <div class="modal" style="max-width: 1200px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="workflow-builder-title">Build Workflow</h3>
+                <button class="modal-close" onclick="app.closeWorkflowBuilder()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="workflow-builder">
+                    <!-- Left Sidebar: Agents -->
+                    <div class="workflow-sidebar">
+                        <div class="workflow-sidebar-title">👥 Agents</div>
+                        <div id="workflow-agents-list">
+                            <!-- Draggable agent cards -->
+                        </div>
+                    </div>
+
+                    <!-- Center: Workflow Canvas -->
+                    <div class="workflow-canvas">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h4>Workflow Steps</h4>
+                            <button class="btn btn-primary btn-small" onclick="app.addWorkflowStep()">+ Add Step</button>
+                        </div>
+                        <div id="workflow-steps-container" class="workflow-steps-container">
+                            <!-- Workflow steps will be added here -->
+                        </div>
+                        <div id="workflow-steps-empty" class="empty-state" style="min-height: 200px;">
+                            <div class="empty-state-text">No steps yet. Click "Add Step" to begin.</div>
+                        </div>
+                    </div>
+
+                    <!-- Right Sidebar: Tools -->
+                    <div class="workflow-sidebar">
+                        <div class="workflow-sidebar-title">🛠️ Tools</div>
+                        <div id="workflow-tools-list">
+                            <!-- Draggable tool cards -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="app.closeWorkflowBuilder()">Close</button>
+                <button class="btn btn-primary" onclick="app.saveWorkflowSteps()">Save Workflow</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- CSV Import Input (hidden) -->
+    <input type="file" id="csv-file-input" accept=".csv" style="display: none;">
 
     <script src="app.js"></script>
 </body>
