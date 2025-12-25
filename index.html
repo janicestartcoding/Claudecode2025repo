@@ -3,117 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insight Tracker</title>
+    <title>AI Ideation Platform - Discover & Collaborate</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+    <!-- Animated Background -->
+    <div class="animated-background">
+        <div class="grid-pattern"></div>
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Main Container -->
     <div class="container">
         <!-- Header -->
-        <header>
-            <h1>💡 Insight Tracker</h1>
-            <nav>
-                <button class="nav-btn active" data-view="repository">Repository</button>
-                <button class="nav-btn" data-view="add-insight">Add Insight</button>
-                <button class="nav-btn" data-view="meeting">Meeting Mode</button>
-            </nav>
+        <header class="main-header">
+            <div class="header-content">
+                <h1 class="logo shimmer-text">
+                    <i data-lucide="zap" class="logo-icon"></i>
+                    AI Ideation Platform
+                </h1>
+                <p class="tagline">Discover, Collaborate, Innovate</p>
+            </div>
+
+            <!-- Auto-save Indicator -->
+            <div class="save-indicator">
+                <i data-lucide="cloud" class="save-icon"></i>
+                <span id="save-status">All changes saved</span>
+            </div>
         </header>
 
-        <!-- Main Content -->
-        <main>
-            <!-- Repository View -->
-            <section id="repository-view" class="view active">
-                <div class="view-header">
-                    <h2>Insights Repository</h2>
-                    <div class="search-filter">
-                        <input type="text" id="search-input" placeholder="Search insights...">
-                        <select id="tag-filter">
-                            <option value="">All Tags</option>
-                        </select>
-                    </div>
-                </div>
-                <div id="insights-grid" class="insights-grid">
-                    <!-- Insight cards will be dynamically added here -->
-                </div>
-                <div id="empty-state" class="empty-state">
-                    <p>No insights yet. Start by adding your first insight!</p>
-                </div>
-            </section>
+        <!-- Control Bar -->
+        <div class="control-bar">
+            <div class="view-controls">
+                <button class="view-btn active" data-view="grid" title="Grid View">
+                    <i data-lucide="grid-3x3"></i>
+                    <span>Grid</span>
+                </button>
+                <button class="view-btn" data-view="list" title="List View">
+                    <i data-lucide="list"></i>
+                    <span>List</span>
+                </button>
+                <button class="view-btn" data-view="spotlight" title="Spotlight View">
+                    <i data-lucide="star"></i>
+                    <span>Spotlight</span>
+                </button>
+            </div>
 
-            <!-- Add Insight View -->
-            <section id="add-insight-view" class="view">
-                <div class="view-header">
-                    <h2>Add New Insight</h2>
+            <div class="action-controls">
+                <button class="action-btn add-idea-btn" id="add-idea-btn">
+                    <i data-lucide="plus-circle"></i>
+                    <span>Add Idea</span>
+                </button>
+                <button class="action-btn upload-btn" id="upload-csv-btn">
+                    <i data-lucide="upload"></i>
+                    <span>Import CSV</span>
+                </button>
+                <button class="action-btn export-btn" id="export-csv-btn">
+                    <i data-lucide="download"></i>
+                    <span>Export Data</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Search & Filter Bar -->
+        <div class="search-filter-bar">
+            <div class="search-box">
+                <i data-lucide="search"></i>
+                <input type="text" id="search-input" placeholder="Search ideas by title, description, or category...">
+            </div>
+
+            <div class="filter-controls">
+                <select id="category-filter" class="filter-select">
+                    <option value="">All Categories</option>
+                </select>
+                <select id="priority-filter" class="filter-select">
+                    <option value="">All Priorities</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+                <select id="status-filter" class="filter-select">
+                    <option value="">All Status</option>
+                    <option value="proposed">Proposed</option>
+                    <option value="in-review">In Review</option>
+                    <option value="approved">Approved</option>
+                    <option value="implemented">Implemented</option>
+                    <option value="archived">Archived</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Ideas Display Area -->
+        <main class="ideas-container">
+            <!-- Grid View -->
+            <div id="grid-view" class="view-mode active">
+                <div id="ideas-grid" class="ideas-grid">
+                    <!-- Idea cards will be dynamically inserted here -->
                 </div>
-                <form id="insight-form" class="insight-form">
-                    <div class="form-group">
-                        <label for="insight-url">Website URL *</label>
-                        <input type="url" id="insight-url" required placeholder="https://example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="insight-title">Title *</label>
-                        <input type="text" id="insight-title" required placeholder="Brief title for this insight">
-                    </div>
-                    <div class="form-group">
-                        <label for="insight-description">Description</label>
-                        <textarea id="insight-description" rows="4" placeholder="What's interesting about this?"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="insight-tags">Tags (comma-separated)</label>
-                        <input type="text" id="insight-tags" placeholder="design, innovation, research">
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Save Insight</button>
-                        <button type="reset" class="btn btn-secondary">Clear</button>
-                    </div>
-                </form>
-            </section>
+            </div>
 
-            <!-- Meeting Mode View -->
-            <section id="meeting-view" class="view">
-                <div class="view-header">
-                    <h2>Meeting Mode</h2>
-                    <button id="toggle-ideas-panel" class="btn btn-secondary">Show Ideas Panel</button>
+            <!-- List View -->
+            <div id="list-view" class="view-mode">
+                <div id="ideas-list" class="ideas-list">
+                    <!-- List items will be dynamically inserted here -->
                 </div>
+            </div>
 
-                <div class="meeting-container">
-                    <!-- Insights Selection Panel -->
-                    <div class="insights-selection">
-                        <h3>Select Insights to Share</h3>
-                        <div id="meeting-insights-list" class="meeting-insights-list">
-                            <!-- Checkboxes for insights will be added here -->
-                        </div>
-                        <button id="start-presentation" class="btn btn-primary">Start Presentation</button>
-                    </div>
-
-                    <!-- Presentation Area -->
-                    <div id="presentation-area" class="presentation-area">
-                        <div id="current-insight-display" class="current-insight-display">
-                            <p class="placeholder">Select insights and click "Start Presentation"</p>
-                        </div>
-                        <div class="presentation-controls">
-                            <button id="prev-insight" class="btn" disabled>← Previous</button>
-                            <span id="insight-counter"></span>
-                            <button id="next-insight" class="btn" disabled>Next →</button>
-                        </div>
-                    </div>
-
-                    <!-- Ideas Panel -->
-                    <div id="ideas-panel" class="ideas-panel">
-                        <h3>Brainstorming Ideas</h3>
-                        <div class="idea-input-group">
-                            <textarea id="idea-input" placeholder="Capture ideas during the meeting..." rows="3"></textarea>
-                            <button id="add-idea" class="btn btn-primary">Add Idea</button>
-                        </div>
-                        <div id="ideas-list" class="ideas-list">
-                            <!-- Ideas will be added here -->
-                        </div>
-                        <button id="export-ideas" class="btn btn-secondary">Export Ideas</button>
-                    </div>
+            <!-- Spotlight View -->
+            <div id="spotlight-view" class="view-mode">
+                <div id="ideas-spotlight" class="ideas-spotlight">
+                    <!-- Spotlight items will be dynamically inserted here -->
                 </div>
-            </section>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state">
+                <i data-lucide="lightbulb" class="empty-icon"></i>
+                <h2>No Ideas Yet</h2>
+                <p>Start by uploading a CSV file or adding your first AI use case idea</p>
+                <button class="cta-btn" id="empty-add-btn">
+                    <i data-lucide="plus"></i>
+                    Add Your First Idea
+                </button>
+            </div>
         </main>
     </div>
 
+    <!-- Add/Edit Idea Modal -->
+    <div id="idea-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-form">
+            <div class="modal-header">
+                <h2 id="modal-title">Add New Idea</h2>
+                <button class="modal-close" id="close-idea-modal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <form id="idea-form" class="idea-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="idea-title">
+                            <i data-lucide="type"></i>
+                            Idea Title *
+                        </label>
+                        <input type="text" id="idea-title" required placeholder="Enter idea title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="idea-category">
+                            <i data-lucide="tag"></i>
+                            Category *
+                        </label>
+                        <input type="text" id="idea-category" required placeholder="e.g., Customer Service, Healthcare, Finance">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="idea-priority">
+                            <i data-lucide="flag"></i>
+                            Priority
+                        </label>
+                        <select id="idea-priority" class="form-select">
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="idea-status">
+                            <i data-lucide="check-circle"></i>
+                            Status
+                        </label>
+                        <select id="idea-status" class="form-select">
+                            <option value="proposed">Proposed</option>
+                            <option value="in-review">In Review</option>
+                            <option value="approved">Approved</option>
+                            <option value="implemented">Implemented</option>
+                            <option value="archived">Archived</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="idea-description">
+                        <i data-lucide="file-text"></i>
+                        Description *
+                    </label>
+                    <textarea id="idea-description" required rows="5" placeholder="Describe the AI use case in detail..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-idea-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i data-lucide="save"></i>
+                        Save Idea
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Idea Detail Modal -->
+    <div id="detail-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-detail">
+            <button class="modal-close detail-close" id="close-detail-modal">
+                <i data-lucide="x"></i>
+            </button>
+
+            <div class="detail-content" id="detail-content">
+                <!-- Detail content will be dynamically inserted -->
+            </div>
+
+            <div class="feedback-section">
+                <h3 class="feedback-title">
+                    <i data-lucide="message-circle"></i>
+                    Discussion & Feedback
+                </h3>
+
+                <div class="feedback-input">
+                    <textarea id="feedback-text" placeholder="Share your thoughts, suggestions, or questions..." rows="3"></textarea>
+                    <div class="feedback-actions">
+                        <div class="sentiment-buttons">
+                            <button class="sentiment-btn" data-sentiment="like" title="Like">
+                                <i data-lucide="thumbs-up"></i>
+                            </button>
+                            <button class="sentiment-btn" data-sentiment="dislike" title="Dislike">
+                                <i data-lucide="thumbs-down"></i>
+                            </button>
+                            <button class="sentiment-btn" data-sentiment="idea" title="Suggestion">
+                                <i data-lucide="lightbulb"></i>
+                            </button>
+                        </div>
+                        <button class="btn btn-primary" id="add-feedback-btn">
+                            <i data-lucide="send"></i>
+                            Add Feedback
+                        </button>
+                    </div>
+                </div>
+
+                <div id="feedback-list" class="feedback-list">
+                    <!-- Feedback items will be dynamically inserted -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSV Upload Modal -->
+    <div id="upload-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-upload">
+            <div class="modal-header">
+                <h2>Import CSV File</h2>
+                <button class="modal-close" id="close-upload-modal">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <div class="upload-zone" id="upload-zone">
+                <i data-lucide="upload-cloud" class="upload-icon"></i>
+                <h3>Drag & Drop CSV File</h3>
+                <p>or click to browse</p>
+                <input type="file" id="csv-file-input" accept=".csv" hidden>
+                <button class="btn btn-primary" id="browse-btn">
+                    <i data-lucide="folder-open"></i>
+                    Browse Files
+                </button>
+            </div>
+
+            <div class="upload-info">
+                <h4>CSV Format Requirements:</h4>
+                <p>Your CSV should include columns: <strong>title, description, category, priority, status</strong></p>
+                <p>Additional custom fields are supported and will be preserved.</p>
+            </div>
+
+            <div id="upload-progress" class="upload-progress hidden">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <p class="progress-text">Processing...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p>Processing...</p>
+    </div>
+
     <script src="app.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
 </body>
 </html>
