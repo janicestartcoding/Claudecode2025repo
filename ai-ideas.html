@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Ideas Showcase - Futuristic Exploration</title>
+    <link rel="stylesheet" href="ai-ideas.css">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span class="logo-icon">🚀</span>
+                <h1>AI Ideas Showcase</h1>
+            </div>
+            <nav class="nav">
+                <button class="nav-btn active" data-view="explore">Explore</button>
+                <button class="nav-btn" data-view="upload">Upload</button>
+                <button class="nav-btn" id="export-btn">Export</button>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Upload View -->
+            <section id="upload-view" class="view">
+                <div class="upload-container">
+                    <div class="upload-card">
+                        <div class="upload-icon">📊</div>
+                        <h2>Upload AI Use Cases</h2>
+                        <p class="upload-description">
+                            Upload a CSV file with your AI use case ideas. The file should include columns for:
+                            Title, Description, Category, Impact, Feasibility, and Owner.
+                        </p>
+                        <div class="upload-zone" id="upload-zone">
+                            <div class="upload-content">
+                                <div class="upload-svg">
+                                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                </div>
+                                <p class="upload-text">Drag & drop your CSV file here</p>
+                                <p class="upload-subtext">or click to browse</p>
+                                <input type="file" id="file-input" accept=".csv" hidden>
+                            </div>
+                        </div>
+                        <div class="upload-actions">
+                            <button class="btn btn-primary" id="upload-btn">Choose File</button>
+                            <button class="btn btn-secondary" id="download-template">Download Template</button>
+                        </div>
+                        <div id="upload-status" class="upload-status"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Explore View -->
+            <section id="explore-view" class="view active">
+                <div class="explore-header">
+                    <h2 class="explore-title">Explore AI Use Cases</h2>
+                    <div class="filter-controls">
+                        <select id="category-filter" class="filter-select">
+                            <option value="">All Categories</option>
+                        </select>
+                        <input type="text" id="search-input" class="search-input" placeholder="Search ideas...">
+                    </div>
+                </div>
+
+                <div id="ideas-grid" class="ideas-grid">
+                    <!-- Idea cards will be dynamically added here -->
+                </div>
+
+                <div id="empty-state" class="empty-state">
+                    <div class="empty-icon">💡</div>
+                    <h3>No Ideas Yet</h3>
+                    <p>Upload a CSV file to get started with your AI use case exploration</p>
+                    <button class="btn btn-primary" id="go-to-upload">Upload Ideas</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Idea Detail Modal -->
+    <div id="idea-modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="close-modal">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <div class="modal-body">
+                <div class="modal-header">
+                    <div class="modal-category" id="modal-category"></div>
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-description"></p>
+                </div>
+
+                <div class="modal-stats">
+                    <div class="stat-card">
+                        <div class="stat-label">Impact</div>
+                        <div class="stat-value" id="modal-impact"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Feasibility</div>
+                        <div class="stat-value" id="modal-feasibility"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Owner</div>
+                        <div class="stat-value" id="modal-owner"></div>
+                    </div>
+                </div>
+
+                <div class="feedback-section">
+                    <h3>Discussion & Feedback</h3>
+                    <div class="feedback-input-group">
+                        <textarea id="feedback-input" placeholder="Share your thoughts, questions, or suggestions..." rows="3"></textarea>
+                        <button class="btn btn-primary" id="add-feedback">Add Feedback</button>
+                    </div>
+                    <div id="feedback-list" class="feedback-list">
+                        <!-- Feedback items will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="ai-ideas.js"></script>
+</body>
+</html>
